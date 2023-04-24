@@ -1,9 +1,9 @@
 ---
 # tasks file for ansible-role-coredump
 
-- name: "Include OS-specific variables"
-  ansible.builtin.include_vars:
-    file: "{{ ansible_os_family }}.yaml"
+#- name: "Include OS-specific variables"
+#  ansible.builtin.include_vars:
+#    file: "{{ ansible_os_family }}.yaml"
 
 - name: "Configure Storage directive in coredump_config"
   ansible.builtin.lineinfile:
@@ -19,3 +19,7 @@
     regexp: '(?i)^(#ProcessSizeMax.*)'
     line: "ProcessSizeMax=0"
     state: present
+
+- name: "Force systemd to reload"
+  ansible.builtin.systemd:
+    daemon_reload: true

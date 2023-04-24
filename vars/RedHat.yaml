@@ -1,4 +1,0 @@
----
-# RedHat vars file for ansible-role-coredump
-
-coredump_config: /etc/systemd/coredump.conf
