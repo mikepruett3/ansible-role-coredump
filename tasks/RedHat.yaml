@@ -1,0 +1,17 @@
+---
+# RedHat tasks file for ansible-role-coredump
+
+- name: "Configure Storage directive in coredump_config"
+  ansible.builtin.lineinfile:
+    path: "{{ coredump_config }}"
+    regexp: '(?i)^(#Storage.*)'
+    line: "Storage=none"
+    state: present
+    backup: true
+
+- name: "Configure ProcessSizeMax directive in coredump_config"
+  ansible.builtin.lineinfile:
+    path: "{{ coredump_config }}"
+    regexp: '(?i)^(#ProcessSizeMax.*)'
+    line: "ProcessSizeMax=0"
+    state: present

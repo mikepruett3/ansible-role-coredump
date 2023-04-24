@@ -1,0 +1,13 @@
+---
+# Debian tasks file for ansible-role-coredump
+
+- name: "Create coredump_config file"
+  ansible.builtin.copy:
+    dest: "{{ coredump_config }}"
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      [Coredump]
+      Storage=none
+      ProcessSizeMax=0

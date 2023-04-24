@@ -5,20 +5,21 @@
 #  ansible.builtin.include_vars:
 #    file: "{{ ansible_os_family }}.yaml"
 
-- name: "Configure Storage directive in coredump_config"
-  ansible.builtin.lineinfile:
-    path: "{{ coredump_config }}"
-    regexp: '(?i)^(#Storage.*)'
-    line: "Storage=none"
-    state: present
-    backup: true
+#- name: "Gather the package facts"
+#  ansible.builtin.package_facts:
+#    manager: auto
+#  when:
+#    - ansible_facts.packages is not defined
 
-- name: "Configure ProcessSizeMax directive in coredump_config"
-  ansible.builtin.lineinfile:
-    path: "{{ coredump_config }}"
-    regexp: '(?i)^(#ProcessSizeMax.*)'
-    line: "ProcessSizeMax=0"
-    state: present
+- name: "Include tasks from RedHat playbook"
+  ansible.builtin.include_tasks: RedHat.yaml
+  when:
+    - ansible_facts['os_family'] == 'RedHat'
+
+- name: "Include tasks from Debian playbook"
+  ansible.builtin.include_tasks: Debian.yaml
+  when:
+    - ansible_facts['os_family'] == 'Debian'
 
 - name: "Force systemd to reload"
   ansible.builtin.systemd:
