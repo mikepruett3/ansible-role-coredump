@@ -1,2 +1,15 @@
 ---
 # tasks file for ansible-role-coredump
+
+- name: "Include OS-specific variables"
+  ansible.builtin.include_vars:
+    file: "{{ ansible_os_family }}.yaml"
+
+- name: "Configure version directive in coredump_config"
+  ansible.builtin.lineinfile:
+    path: "{{ coredump_config }}"
+    regexp: '(?i)^(#Storage.*)'
+    line: "Storage=none"
+    state: present
+    backup: true
+
