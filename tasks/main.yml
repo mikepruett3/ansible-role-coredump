@@ -5,7 +5,7 @@
   ansible.builtin.include_vars:
     file: "{{ ansible_os_family }}.yaml"
 
-- name: "Configure version directive in coredump_config"
+- name: "Configure Storage directive in coredump_config"
   ansible.builtin.lineinfile:
     path: "{{ coredump_config }}"
     regexp: '(?i)^(#Storage.*)'
@@ -13,3 +13,9 @@
     state: present
     backup: true
 
+- name: "Configure ProcessSizeMax directive in coredump_config"
+  ansible.builtin.lineinfile:
+    path: "{{ coredump_config }}"
+    regexp: '(?i)^(#ProcessSizeMax.*)'
+    line: "ProcessSizeMax=0"
+    state: present
